@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin - Places{% endblock %}
+{% block admin_content %}
+<h3 class="section-title">Places : {{ event.title }}</h3>
+<a href="{{ url_for('main.admin_events') }}" class="small d-block mb-3">&larr; Retour aux événements</a>
+
+<div class="row g-4">
+    <div class="col-lg-3">
+        <div class="card border-0 shadow-sm p-3">
+            <h6>Ajouter une place</h6>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-2">
+                    {{ form.section.label(class_="form-label small") }}
+                    {{ form.section(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.row.label(class_="form-label small") }}
+                    {{ form.row(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.number.label(class_="form-label small") }}
+                    {{ form.number(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.price.label(class_="form-label small") }}
+                    {{ form.price(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.status.label(class_="form-label small") }}
+                    {{ form.status(class_="form-select form-select-sm") }}
+                </div>
+                <button class="btn btn-danger btn-sm w-100 mt-2">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body" style="max-height:70vh; overflow-y:auto;">
+                <table class="table table-sm table-hover align-middle">
+                    <thead><tr><th>Place</th><th>Prix</th><th>Statut</th><th class="text-end">Actions</th></tr></thead>
+                    <tbody>
+                    {% for s in seats %}
+                        <tr>
+                            <td>{{ s.label }}</td>
+                            <td>{{ s.price | int }} DA</td>
+                            <td>
+                                {% if s.status == 'disponible' %}
+                                <span class="badge bg-success">Disponible</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Réservée</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <form method="POST" action="{{ url_for('main.admin_toggle_seat', seat_id=s.id) }}" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-outline-secondary" {{ 'disabled' if s.ticket }}>Changer statut</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('main.admin_delete_seat', seat_id=s.id) }}" class="d-inline" onsubmit="return confirm('Supprimer cette place ?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-outline-danger" {{ 'disabled' if s.ticket }}>Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

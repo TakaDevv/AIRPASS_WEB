@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin - Modifier stade{% endblock %}
+{% block admin_content %}
+<h3 class="section-title">Modifier : {{ stadium.name }}</h3>
+<div class="card border-0 shadow-sm p-4" style="max-width:500px;">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.name.label(class_="form-label") }}
+            {{ form.name(class_="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.city.label(class_="form-label") }}
+            {{ form.city(class_="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.capacity.label(class_="form-label") }}
+            {{ form.capacity(class_="form-control") }}
+        </div>
+        <button class="btn btn-danger w-100">Enregistrer</button>
+        <a href="{{ url_for('main.admin_stadiums') }}" class="btn btn-link w-100">Annuler</a>
+    </form>
+</div>
+{% endblock %}

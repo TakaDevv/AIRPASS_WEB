@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+database.db
+static/qrcodes/
+static/tickets_pdf/
+.venv/
+venv/
+instance/

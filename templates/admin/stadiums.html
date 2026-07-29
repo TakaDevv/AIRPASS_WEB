@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin - Stades{% endblock %}
+{% block admin_content %}
+<h3 class="section-title">Gestion des stades</h3>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm p-3">
+            <h6>Ajouter un stade</h6>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-2">
+                    {{ form.name.label(class_="form-label small") }}
+                    {{ form.name(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.city.label(class_="form-label small") }}
+                    {{ form.city(class_="form-control form-control-sm") }}
+                </div>
+                <div class="mb-2">
+                    {{ form.capacity.label(class_="form-label small") }}
+                    {{ form.capacity(class_="form-control form-control-sm") }}
+                </div>
+                <button class="btn btn-danger btn-sm w-100 mt-2">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead><tr><th>Nom</th><th>Ville</th><th>Capacité</th><th class="text-end">Actions</th></tr></thead>
+                    <tbody>
+                    {% for s in stadiums %}
+                        <tr>
+                            <td>{{ s.name }}</td>
+                            <td>{{ s.city }}</td>
+                            <td>{{ s.capacity }}</td>
+                            <td class="text-end">
+                                <a href="{{ url_for('main.admin_edit_stadium', stadium_id=s.id) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                                <form method="POST" action="{{ url_for('main.admin_delete_stadium', stadium_id=s.id) }}" class="d-inline" onsubmit="return confirm('Supprimer ce stade et ses événements ?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

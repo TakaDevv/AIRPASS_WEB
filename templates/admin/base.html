@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 admin-sidebar py-4 px-0">
+            <h6 class="text-white-50 px-3 mb-3 text-uppercase small">Administration</h6>
+            <a href="{{ url_for('main.admin_dashboard') }}" class="{{ 'active' if request.endpoint == 'main.admin_dashboard' }}"><i class="bi bi-speedometer2"></i> Tableau de bord</a>
+            <a href="{{ url_for('main.admin_users') }}" class="{{ 'active' if request.endpoint == 'main.admin_users' }}"><i class="bi bi-people"></i> Utilisateurs</a>
+            <a href="{{ url_for('main.admin_stadiums') }}" class="{{ 'active' if 'stadium' in request.endpoint }}"><i class="bi bi-buildings"></i> Stades</a>
+            <a href="{{ url_for('main.admin_events') }}" class="{{ 'active' if 'event' in request.endpoint }}"><i class="bi bi-calendar-event"></i> Événements</a>
+            <a href="{{ url_for('main.admin_tickets') }}" class="{{ 'active' if request.endpoint == 'main.admin_tickets' }}"><i class="bi bi-ticket-perforated"></i> Billets vendus</a>
+            <a href="{{ url_for('main.admin_parking') }}" class="{{ 'active' if request.endpoint == 'main.admin_parking' }}"><i class="bi bi-p-square"></i> Réservations parking</a>
+            <hr class="text-white-50 mx-3">
+            <a href="{{ url_for('main.index') }}"><i class="bi bi-box-arrow-left"></i> Retour au site</a>
+        </div>
+        <div class="col-lg-10 py-4">
+            {% block admin_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

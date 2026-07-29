@@ -1,0 +1,212 @@
+:root {
+    --airpass-navy: #0B1F3A;
+    --airpass-navy-light: #12294f;
+    --airpass-red: #C8102E;
+    --airpass-red-dark: #a30d25;
+    --airpass-white: #ffffff;
+    --airpass-grey: #f4f6f9;
+}
+
+body {
+    background-color: var(--airpass-grey);
+    font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+    color: #1c2b3a;
+}
+
+/* --- Navbar --- */
+.airpass-navbar {
+    background: linear-gradient(135deg, var(--airpass-navy) 0%, var(--airpass-navy-light) 100%);
+}
+.airpass-navbar .nav-link {
+    color: rgba(255,255,255,.85);
+    font-weight: 500;
+}
+.airpass-navbar .nav-link:hover {
+    color: var(--airpass-white);
+}
+
+/* --- Footer --- */
+.airpass-footer {
+    background-color: var(--airpass-navy);
+    color: rgba(255,255,255,.7);
+}
+
+/* --- Buttons --- */
+.btn-danger, .btn-airpass {
+    background-color: var(--airpass-red);
+    border-color: var(--airpass-red);
+}
+.btn-danger:hover, .btn-airpass:hover {
+    background-color: var(--airpass-red-dark);
+    border-color: var(--airpass-red-dark);
+}
+.btn-navy {
+    background-color: var(--airpass-navy);
+    border-color: var(--airpass-navy);
+    color: #fff;
+}
+.btn-navy:hover {
+    background-color: var(--airpass-navy-light);
+    color: #fff;
+}
+
+/* --- Hero --- */
+.hero-section {
+    background: linear-gradient(135deg, var(--airpass-navy) 0%, #1b3a63 60%, var(--airpass-red) 160%);
+    color: #fff;
+    padding: 70px 0 90px;
+}
+.hero-section h1 {
+    font-weight: 800;
+}
+.search-box {
+    background: #fff;
+    border-radius: 50px;
+    padding: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.search-box input {
+    border: none;
+    border-radius: 50px !important;
+}
+.search-box input:focus {
+    box-shadow: none;
+}
+
+/* --- Cards --- */
+.event-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(11,31,58,.08);
+    transition: transform .2s ease, box-shadow .2s ease;
+    height: 100%;
+}
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(11,31,58,.16);
+}
+.event-card .card-img-top {
+    height: 160px;
+    object-fit: cover;
+    background-color: var(--airpass-navy);
+}
+.badge-navy {
+    background-color: var(--airpass-navy);
+}
+.section-title {
+    font-weight: 700;
+    color: var(--airpass-navy);
+    border-left: 5px solid var(--airpass-red);
+    padding-left: 12px;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Seat map --- */
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+    gap: 6px;
+}
+.seat-btn {
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    border: none;
+    font-size: .7rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2ecc71;
+    cursor: pointer;
+}
+.seat-btn:disabled {
+    background-color: #c9ced6;
+    cursor: not-allowed;
+}
+.seat-btn.selected {
+    background-color: var(--airpass-red);
+    outline: 3px solid rgba(200,16,46,.3);
+}
+.seat-legend span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* --- Ticket card --- */
+.ticket-card {
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(11,31,58,.1);
+    overflow: hidden;
+}
+.ticket-card .ticket-header {
+    background: linear-gradient(135deg, var(--airpass-navy) 0%, var(--airpass-navy-light) 100%);
+    color: #fff;
+}
+.ticket-card .ticket-stub {
+    position: relative;
+}
+.qr-box {
+    background: #fff;
+    border: 2px dashed #cfd6e0;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* --- Admin --- */
+.admin-sidebar {
+    background-color: var(--airpass-navy);
+    min-height: 100vh;
+    color: #fff;
+}
+.admin-sidebar a {
+    color: rgba(255,255,255,.8);
+    text-decoration: none;
+    display: block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin: 2px 8px;
+}
+.admin-sidebar a:hover, .admin-sidebar a.active {
+    background-color: var(--airpass-red);
+    color: #fff;
+}
+.stat-card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 6px 18px rgba(11,31,58,.08);
+    padding: 20px;
+}
+
+/* --- Chatbot --- */
+.chat-window {
+    height: 60vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(11,31,58,.08);
+}
+.chat-bubble {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+.chat-bubble.bot {
+    background: var(--airpass-grey);
+    border: 1px solid #e3e7ee;
+}
+.chat-bubble.user {
+    background: var(--airpass-navy);
+    color: #fff;
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .hero-section { padding: 45px 0 65px; }
+}

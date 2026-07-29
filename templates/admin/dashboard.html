@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin - Tableau de bord{% endblock %}
+{% block admin_content %}
+<h3 class="section-title">Tableau de bord administrateur</h3>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card text-center">
+            <i class="bi bi-people fs-2 text-danger"></i>
+            <h3 class="mt-2 mb-0">{{ stats.users }}</h3>
+            <small class="text-muted">Utilisateurs</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card text-center">
+            <i class="bi bi-ticket-perforated fs-2 text-danger"></i>
+            <h3 class="mt-2 mb-0">{{ stats.tickets }}</h3>
+            <small class="text-muted">Billets vendus</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card text-center">
+            <i class="bi bi-calendar-event fs-2 text-danger"></i>
+            <h3 class="mt-2 mb-0">{{ stats.events }}</h3>
+            <small class="text-muted">Événements</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card text-center">
+            <i class="bi bi-check-circle fs-2 text-danger"></i>
+            <h3 class="mt-2 mb-0">{{ stats.available_seats }}</h3>
+            <small class="text-muted">Places disponibles</small>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="mb-3">Derniers billets vendus</h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead><tr><th>Code</th><th>Client</th><th>Événement</th><th>Siège</th><th>Date d'achat</th></tr></thead>
+                <tbody>
+                {% for t in recent_tickets %}
+                    <tr>
+                        <td>{{ t.code }}</td>
+                        <td>{{ t.user.fullname }}</td>
+                        <td>{{ t.event.title }}</td>
+                        <td>{{ t.seat.label }}</td>
+                        <td>{{ t.purchase_date.strftime('%d/%m/%Y %H:%M') }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5" class="text-muted">Aucun billet vendu.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord{% endblock %}
+{% block content %}
+<div class="container my-4">
+    <h3 class="section-title">Bonjour, {{ current_user.fullname.split(' ')[0] }} 👋</h3>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="mb-3"><i class="bi bi-ticket-perforated text-danger"></i> Mes derniers billets</h5>
+                    {% for t in tickets %}
+                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div>
+                            <strong>{{ t.event.title }}</strong><br>
+                            <small class="text-muted">{{ t.event.date.strftime('%d/%m/%Y') }} &middot; Siège {{ t.seat.label }}</small>
+                        </div>
+                        <a href="{{ url_for('main.ticket_detail', ticket_id=t.id) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">Vous n'avez pas encore de billet.</p>
+                    {% endfor %}
+                    <a href="{{ url_for('main.tickets') }}" class="small d-block mt-2">Voir tous mes billets &rarr;</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="mb-3"><i class="bi bi-bell text-danger"></i> Notifications récentes</h5>
+                    {% for n in notifications %}
+                    <div class="border-bottom py-2">
+                        <small>{{ n.message }}</small><br>
+                        <small class="text-muted">{{ n.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">Aucune notification.</p>
+                    {% endfor %}
+                    <a href="{{ url_for('main.notifications') }}" class="small d-block mt-2">Voir toutes les notifications &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="section-title">Prochains matchs à ne pas manquer</h5>
+    <div class="row g-4">
+        {% for event in upcoming_events %}
+        <div class="col-md-3 col-sm-6">
+            <div class="card event-card">
+                <img src="{{ url_for('static', filename='images/event_default.jpg') }}" class="card-img-top" alt="{{ event.title }}">
+                <div class="card-body">
+                    <h6 class="card-title">{{ event.title }}</h6>
+                    <p class="small text-muted mb-2">{{ event.date.strftime('%d/%m/%Y') }} &middot; {{ event.stadium.name }}</p>
+                    <a href="{{ url_for('main.booking', event_id=event.id) }}" class="btn btn-danger btn-sm w-100">Acheter</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

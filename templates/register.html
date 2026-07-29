@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Créer un compte{% endblock %}
+{% block content %}
+<div class="container my-5" style="max-width:480px;">
+    <div class="card shadow-sm border-0 p-4">
+        <h3 class="section-title text-center border-0">Créer un compte</h3>
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.fullname.label(class_="form-label") }}
+                {{ form.fullname(class_="form-control", placeholder="Nom et prénom") }}
+                {% for e in form.fullname.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.email.label(class_="form-label") }}
+                {{ form.email(class_="form-control", placeholder="exemple@email.com") }}
+                {% for e in form.email.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.phone.label(class_="form-label") }}
+                {{ form.phone(class_="form-control", placeholder="05XXXXXXXX") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class_="form-label") }}
+                {{ form.password(class_="form-control") }}
+                {% for e in form.password.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.confirm.label(class_="form-label") }}
+                {{ form.confirm(class_="form-control") }}
+                {% for e in form.confirm.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Créer mon compte</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">Déjà inscrit ? <a href="{{ url_for('main.login') }}">Se connecter</a></p>
+    </div>
+</div>
+{% endblock %}

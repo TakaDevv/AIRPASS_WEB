@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Mes billets{% endblock %}
+{% block content %}
+<div class="container my-4">
+    <h3 class="section-title">Mes billets</h3>
+    <div class="row g-4">
+        {% for t in tickets %}
+        <div class="col-md-6">
+            <div class="card ticket-card">
+                <div class="ticket-header p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">{{ t.event.title }}</h6>
+                        {% if t.status == 'valide' %}
+                        <span class="badge bg-success">Valide</span>
+                        {% elif t.status == 'utilise' %}
+                        <span class="badge bg-secondary">Utilisé</span>
+                        {% else %}
+                        <span class="badge bg-danger">Annulé</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><i class="bi bi-geo-alt"></i> {{ t.event.stadium.name }}</p>
+                    <p class="mb-1"><i class="bi bi-calendar-event"></i> {{ t.event.date.strftime('%d/%m/%Y à %H:%M') }}</p>
+                    <p class="mb-3"><i class="bi bi-person-badge"></i> Siège {{ t.seat.label }}</p>
+                    <a href="{{ url_for('main.ticket_detail', ticket_id=t.id) }}" class="btn btn-danger btn-sm">Voir le billet</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">Vous n'avez encore acheté aucun billet. <a href="{{ url_for('main.index') }}">Parcourir les événements</a></p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

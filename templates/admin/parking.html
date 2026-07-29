@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin - Parking{% endblock %}
+{% block admin_content %}
+<h3 class="section-title">Réservations parking</h3>
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead><tr><th>Emplacement</th><th>Client</th><th>Billet</th><th>Statut</th></tr></thead>
+                <tbody>
+                {% for p in parkings %}
+                    <tr>
+                        <td>{{ p.parking_number }}</td>
+                        <td>{{ p.ticket.user.fullname }}</td>
+                        <td>{{ p.ticket.code }}</td>
+                        <td>
+                            {% if p.status == 'reserve' %}<span class="badge bg-success">Réservé</span>
+                            {% else %}<span class="badge bg-secondary">Utilisé</span>{% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="text-muted">Aucune réservation de parking.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

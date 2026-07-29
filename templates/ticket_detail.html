@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Billet {{ ticket.code }}{% endblock %}
+{% block content %}
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card ticket-card mb-4">
+                <div class="ticket-header p-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h4 class="mb-1">{{ ticket.event.title }}</h4>
+                            <p class="mb-0 small opacity-75">{{ ticket.event.stadium.name }}, {{ ticket.event.stadium.city }}</p>
+                        </div>
+                        {% if ticket.status == 'valide' %}
+                        <span class="badge bg-success fs-6">Valide</span>
+                        {% elif ticket.status == 'utilise' %}
+                        <span class="badge bg-secondary fs-6">Utilisé</span>
+                        {% else %}
+                        <span class="badge bg-danger fs-6">Annulé</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-7">
+                            <p class="mb-1"><i class="bi bi-calendar-event text-danger"></i> {{ ticket.event.date.strftime('%d/%m/%Y à %H:%M') }}</p>
+                            <p class="mb-1"><i class="bi bi-person-badge text-danger"></i> Siège {{ ticket.seat.label }}</p>
+                            <p class="mb-1"><i class="bi bi-person text-danger"></i> {{ ticket.user.fullname }}</p>
+                            {% if ticket.parking %}
+                            <p class="mb-1"><i class="bi bi-p-square text-danger"></i> {{ ticket.parking.parking_number }}</p>
+                            {% endif %}
+                            <p class="mb-0 small text-muted mt-2">Code billet : <strong>{{ ticket.code }}</strong></p>
+                        </div>
+                        <div class="col-5 text-center">
+                            <div class="qr-box d-inline-block">
+                                <img src="{{ url_for('static', filename='qrcodes/' + ticket.qr_code) }}" alt="QR Code" width="120" height="120">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <a href="{{ url_for('main.ticket_download', ticket_id=ticket.id) }}" class="btn btn-navy w-100 mb-3"><i class="bi bi-download"></i> Télécharger en PDF</a>
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <form method="POST" action="{{ url_for('main.verify_identity', ticket_id=ticket.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline-secondary w-100"><i class="bi bi-camera"></i> Identité vérifiée</button>
+                            </form>
+                            <p class="small text-muted mt-1 mb-0">Simulation Face ID</p>
+                        </div>
+                        <div class="col-6">
+                            <form method="POST" action="{{ url_for('main.scan_nfc', ticket_id=ticket.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline-secondary w-100" {% if ticket.status == 'utilise' %}disabled{% endif %}><i class="bi bi-wifi"></i> Scanner NFC</button>
+                            </form>
+                            <p class="small text-muted mt-1 mb-0">Simulation entrée stade</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ url_for('main.tickets') }}" class="small">&larr; Retour à mes billets</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

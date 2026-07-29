@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Assistant Airpass{% endblock %}
+{% block content %}
+<div class="container my-4" style="max-width:750px;">
+    <h3 class="section-title">Assistant Airpass <span class="badge bg-danger">Démo</span></h3>
+    <p class="text-muted small">Cet assistant est simulé à des fins de démonstration (pas d'IA réelle connectée).</p>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-bubble bot">Bonjour 👋 Je suis l'assistant Airpass. Comment puis-je vous aider aujourd'hui ?</div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 my-3">
+        <button class="btn btn-outline-secondary btn-sm quick-q">Comment acheter un billet ?</button>
+        <button class="btn btn-outline-secondary btn-sm quick-q">Comment fonctionne le parking ?</button>
+        <button class="btn btn-outline-secondary btn-sm quick-q">J'ai perdu mon billet</button>
+        <button class="btn btn-outline-secondary btn-sm quick-q">Problème de paiement</button>
+    </div>
+
+    <form id="chatForm" class="d-flex gap-2">
+        <input type="text" id="chatInput" class="form-control" placeholder="Écrivez votre message...">
+        <button type="submit" class="btn btn-danger"><i class="bi bi-send"></i></button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+{% endblock %}

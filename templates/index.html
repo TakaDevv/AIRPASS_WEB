@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-5">Vivez le match autrement avec <span class="text-danger">AIRPASS</span></h1>
+        <p class="lead mb-4">Achetez vos billets, réservez votre place et votre parking en quelques clics.</p>
+        <form class="search-box mx-auto d-flex" style="max-width:600px" method="get" action="{{ url_for('main.index') }}">
+            <input type="text" name="q" class="form-control ps-4" placeholder="Rechercher un match, une équipe..." value="{{ query }}">
+            <button class="btn btn-danger rounded-pill px-4" type="submit"><i class="bi bi-search"></i> Rechercher</button>
+        </form>
+    </div>
+</section>
+
+<div class="container" style="margin-top:-50px;">
+    <div class="row g-3">
+        {% for s in stadiums %}
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center py-3">
+                <i class="bi bi-buildings fs-2 text-danger"></i>
+                <h6 class="mt-2 mb-0">{{ s.name }}</h6>
+                <small class="text-muted">{{ s.city }} &middot; {{ s.capacity }} places</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3 class="section-title">Prochains matchs</h3>
+    <div class="row g-4">
+        {% for event in upcoming %}
+        <div class="col-md-3 col-sm-6">
+            <div class="card event-card">
+                <img src="{{ url_for('static', filename='images/event_default.jpg') }}" class="card-img-top" alt="{{ event.title }}">
+                <div class="card-body">
+                    <span class="badge badge-navy mb-2">{{ event.date.strftime('%d/%m/%Y') }}</span>
+                    <h6 class="card-title">{{ event.title }}</h6>
+                    <p class="small text-muted mb-2"><i class="bi bi-geo-alt"></i> {{ event.stadium.name }}</p>
+                    <a href="{{ url_for('main.event_detail', event_id=event.id) }}" class="btn btn-outline-navy btn-sm w-100 border" style="color: var(--airpass-navy); border-color: var(--airpass-navy) !important;">Détails</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">Aucun match à venir pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <h3 class="section-title">Tous les événements</h3>
+    <div class="row g-4">
+        {% for event in events %}
+        <div class="col-md-3 col-sm-6">
+            <div class="card event-card">
+                <img src="{{ url_for('static', filename='images/event_default.jpg') }}" class="card-img-top" alt="{{ event.title }}">
+                <div class="card-body">
+                    <span class="badge badge-navy mb-2">{{ event.date.strftime('%d/%m/%Y') }}</span>
+                    <h6 class="card-title">{{ event.title }}</h6>
+                    <p class="small text-muted mb-1"><i class="bi bi-geo-alt"></i> {{ event.stadium.name }}</p>
+                    <p class="small mb-2"><i class="bi bi-ticket"></i> {{ event.available_seats_count }} places disponibles</p>
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('main.event_detail', event_id=event.id) }}" class="btn btn-sm flex-fill border" style="color: var(--airpass-navy); border-color: var(--airpass-navy);">Détails</a>
+                        <a href="{{ url_for('main.booking', event_id=event.id) if current_user else url_for('main.login') }}" class="btn btn-danger btn-sm flex-fill">Acheter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">Aucun résultat pour cette recherche.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Connexion{% endblock %}
+{% block content %}
+<div class="container my-5" style="max-width:420px;">
+    <div class="card shadow-sm border-0 p-4">
+        <h3 class="section-title text-center border-0">Connexion</h3>
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.email.label(class_="form-label") }}
+                {{ form.email(class_="form-control", placeholder="exemple@email.com") }}
+                {% for e in form.email.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class_="form-label") }}
+                {{ form.password(class_="form-control") }}
+                {% for e in form.password.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Se connecter</button>
+        </form>
+        <p class="text-center mt-3 mb-1 small">Pas encore de compte ? <a href="{{ url_for('main.register') }}">Créer un compte</a></p>
+        <p class="text-center small text-muted">Compte admin démo : admin@airpass.dz / admin123</p>
+    </div>
+</div>
+{% endblock %}
